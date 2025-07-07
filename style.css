@@ -82,6 +82,7 @@ input {
 
 /* Header Grid Layout */
 .menuHeader {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(12, 1fr);
   grid-template-rows: 34px 48px 42px;
@@ -333,3 +334,27 @@ input {
 .bodyHeader__order > span {
   width: max-content;
 }
+
+/*  */
+.catalog{
+  position: absolute;
+  top: 25vh;
+  left: 125px;
+  background: #939393;
+  padding: 20px 0;
+}
+.catalog>.container>ul>li{
+  min-width: 340px;
+  line-height: 50px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  font-size: 20px;
+
+}
+.catalog>.container>ul>li>h4{
+  margin: 0 50px 0 16px;
+}
+/*  */
