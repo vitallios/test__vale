@@ -1,59 +1,76 @@
-        document.addEventListener('DOMContentLoaded', function() {
-            const smartphonesGadgets = document.getElementById('smartphones-gadgets');
-            const smartphonesMenu = document.getElementById('smartphones-menu');
-            const smartphones227 = document.getElementById('smartphones-227');
-            const gadgetsMenu = document.getElementById('gadgets-menu');
+document.addEventListener('DOMContentLoaded', function() {
+    // Функция для отображения/скрытия меню
+    const toggleMenuVisibility = (element, action) => {
+        if (!element) return;
+        
+        if (action === 'show') {
+            element.classList.add('show');
+            element.style.display = 'flex';
+        } else {
+            element.classList.remove('show');
+            element.style.display = 'none';
+        }
+    };
 
-            const toggleMenuVisibility = (element, action) => {
-                if (action === 'show') {
-                    element.classList.add('show');
-                    element.style.display = 'flex';
-                } else {
-                    element.classList.remove('show');
-                    element.style.display = 'none';
-                }
-            };
+    // Находим все пункты главного меню с подменю
+    const menuItemsWithSubmenu = document.querySelectorAll('.catalog__list-item');
 
-            smartphonesGadgets.addEventListener('click', function() {
-                toggleMenuVisibility(smartphonesMenu, 'show');
+    // Добавляем обработчики для каждого пункта главного меню
+    menuItemsWithSubmenu.forEach(item => {
+        const submenu = item.querySelector('.catalog__submenu');
+        
+        if (submenu) {
+            // Показываем подменю при наведении на пункт меню
+            item.addEventListener('mouseenter', function() {
+                toggleMenuVisibility(submenu, 'show');
             });
 
-            smartphonesGadgets.addEventListener('mouseleave', function() {
+            // Скрываем подменю при уходе с пункта меню
+            item.addEventListener('mouseleave', function() {
                 setTimeout(() => {
-                    if (!smartphonesMenu.matches(':hover') && !smartphones227.matches(':hover')) {
-                        toggleMenuVisibility(smartphonesMenu, 'hide');
-                        toggleMenuVisibility(gadgetsMenu, 'hide');
+                    if (!submenu.matches(':hover')) {
+                        toggleMenuVisibility(submenu, 'hide');
+                        // Скрываем все вложенные подменю
+                        const subsubmenus = submenu.querySelectorAll('.catalog__subsubmenu');
+                        subsubmenus.forEach(subsub => toggleMenuVisibility(subsub, 'hide'));
                     }
-                }, 600);
+                }, 300);
             });
 
-            smartphones227.addEventListener('click', function() {
-                toggleMenuVisibility(gadgetsMenu, 'show');
+            // Скрываем подменю при уходе с самого подменю
+            submenu.addEventListener('mouseleave', function() {
+                toggleMenuVisibility(submenu, 'hide');
+            });
+        }
+    });
+
+    // Находим все пункты подменю с подразделами
+    const submenuItemsWithSubsubmenu = document.querySelectorAll('.catalog__submenu-item');
+
+    // Добавляем обработчики для каждого пункта подменю
+    submenuItemsWithSubsubmenu.forEach(item => {
+        const subsubmenu = item.querySelector('.catalog__subsubmenu');
+        
+        if (subsubmenu) {
+            // Показываем подраздел при наведении на пункт подменю
+            item.addEventListener('mouseenter', function() {
+                toggleMenuVisibility(subsubmenu, 'show');
             });
 
-            smartphones227.addEventListener('mouseleave', function() {
+            // Скрываем подраздел при уходе с пункта подменю
+            item.addEventListener('mouseleave', function() {
                 setTimeout(() => {
-                    if (!gadgetsMenu.matches(':hover')) {
-                        toggleMenuVisibility(gadgetsMenu, 'hide');
+                    if (!subsubmenu.matches(':hover')) {
+                        toggleMenuVisibility(subsubmenu, 'hide');
                     }
-                }, 600);
+                }, 300);
             });
 
-            smartphonesMenu.addEventListener('click', function() {
-                setTimeout(() => {
-                    if (!smartphonesGadgets.matches(':hover') && !smartphones227.matches(':hover')) {
-                        toggleMenuVisibility(smartphonesMenu, 'hide');
-                        toggleMenuVisibility(gadgetsMenu, 'hide');
-                    }
-                }, 600);
+            // Скрываем подраздел при уходе с самого подраздела
+            subsubmenu.addEventListener('mouseleave', function() {
+                toggleMenuVisibility(subsubmenu, 'hide');
             });
+        }
+    });
 
-            gadgetsMenu.addEventListener('click', function() {
-                setTimeout(() => {
-                    if (!smartphones227.matches(':hover')) {
-                        toggleMenuVisibility(gadgetsMenu, 'hide');
-                    }
-                }, 600);
-            });
-        });
-
+});
