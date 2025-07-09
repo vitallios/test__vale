@@ -72,5 +72,19 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
     });
+    const catalog = this.querySelector('.catalog')
+    const bodyHeaderNavBurgerMenu = this.querySelector('.bodyHeader__nav-burger_menu')
+    bodyHeaderNavBurgerMenu.addEventListener('click',()=>{
+        console.dir(bodyHeaderNavBurgerMenu.classList);
+        if(catalog.classList[1]){
+            catalog.classList.remove('openCatalog')
+            bodyHeaderNavBurgerMenu.classList.add('menuOpen')
+            
+        } else{
+            catalog.classList.add('openCatalog')
+            bodyHeaderNavBurgerMenu.classList.remove('menuOpen')
+
+        }
+    })
 
 });
