@@ -1,90 +1,51 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // Функция для отображения/скрытия меню
-    const toggleMenuVisibility = (element, action) => {
-        if (!element) return;
-        
-        if (action === 'show') {
-            element.classList.add('show');
-            element.style.display = 'flex';
-        } else {
-            element.classList.remove('show');
-            element.style.display = 'none';
-        }
-    };
+document.addEventListener('DOMContentLoaded', function () {
 
-    // Находим все пункты главного меню с подменю
-    const menuItemsWithSubmenu = document.querySelectorAll('.catalog__list-item');
-
-    // Добавляем обработчики для каждого пункта главного меню
-    menuItemsWithSubmenu.forEach(item => {
-        const submenu = item.querySelector('.catalog__submenu');
-        
-        if (submenu) {
-            // Показываем подменю при наведении на пункт меню
-            item.addEventListener('mouseenter', function() {
-                toggleMenuVisibility(submenu, 'show');
-            });
-
-            // Скрываем подменю при уходе с пункта меню
-            item.addEventListener('mouseleave', function() {
-                setTimeout(() => {
-                    if (!submenu.matches(':hover')) {
-                        toggleMenuVisibility(submenu, 'hide');
-                        // Скрываем все вложенные подменю
-                        const subsubmenus = submenu.querySelectorAll('.catalog__subsubmenu');
-                        subsubmenus.forEach(subsub => toggleMenuVisibility(subsub, 'hide'));
-                    }
-                }, 300);
-            });
-
-            // Скрываем подменю при уходе с самого подменю
-            submenu.addEventListener('mouseleave', function() {
-                toggleMenuVisibility(submenu, 'hide');
-            });
-        }
-    });
-
-    // Находим все пункты подменю с подразделами
-    const submenuItemsWithSubsubmenu = document.querySelectorAll('.catalog__submenu-item');
-
-    // Добавляем обработчики для каждого пункта подменю
-    submenuItemsWithSubsubmenu.forEach(item => {
-        const subsubmenu = item.querySelector('.catalog__subsubmenu');
-        
-        if (subsubmenu) {
-            // Показываем подраздел при наведении на пункт подменю
-            item.addEventListener('mouseenter', function() {
-                toggleMenuVisibility(subsubmenu, 'show');
-            });
-
-            // Скрываем подраздел при уходе с пункта подменю
-            item.addEventListener('mouseleave', function() {
-                setTimeout(() => {
-                    if (!subsubmenu.matches(':hover')) {
-                        toggleMenuVisibility(subsubmenu, 'hide');
-                    }
-                }, 300);
-            });
-
-            // Скрываем подраздел при уходе с самого подраздела
-            subsubmenu.addEventListener('mouseleave', function() {
-                toggleMenuVisibility(subsubmenu, 'hide');
-            });
-        }
-    });
     const catalog = this.querySelector('.catalog')
     const bodyHeaderNavBurgerMenu = this.querySelector('.bodyHeader__nav-burger_menu')
-    bodyHeaderNavBurgerMenu.addEventListener('click',()=>{
-        console.dir(bodyHeaderNavBurgerMenu.classList);
-        if(catalog.classList[1]){
-            catalog.classList.remove('openCatalog')
-            bodyHeaderNavBurgerMenu.classList.add('menuOpen')
-            
-        } else{
-            catalog.classList.add('openCatalog')
-            bodyHeaderNavBurgerMenu.classList.remove('menuOpen')
 
+    // открытие и закрытие меню
+    bodyHeaderNavBurgerMenu.addEventListener('click', () => {
+        catalog.classList.toggle('openCatalog');
+        bodyHeaderNavBurgerMenu.classList.toggle('menuOpen');
+    });
+
+    const catalogList = this.querySelector('.catalog__list')
+    for (let item of catalogList.children) {
+        item.lastElementChild.classList.remove('catalog__mobile-submenu');
+        // subMenu
+        item.addEventListener('click', () => {
+            if (item.lastChild && item.lastElementChild.classList.contains('catalog__submenu')) {
+                const subsub = item.lastElementChild.querySelector('.catalog__subsubmenu');
+                if (subsub) {
+                    item.lastElementChild.classList.add('show','catalog__mobile-submenu');
+                }
+            }
+        })
+        // subSubMenu
+        const catalogSubmenuItem = item.querySelectorAll('.catalog__submenu-item')
+        for (let subitem of catalogSubmenuItem) {
+            subitem.addEventListener('click', () => {
+                if (subitem.lastElementChild && subitem.lastElementChild.classList.contains('catalog__subsubmenu')) {
+                    
+                    subitem.lastElementChild.classList.add('show', 'catalog__mobile-subsubmenu');
+                }
+            })
         }
-    })
-
+        // 
+    }
+    const backButtonSubmenu = document.querySelectorAll('.back-button-submenu');
+    const backButtonSubsubmenu = document.querySelectorAll('.back-button-subsubmenu');
+    
+    backButtonSubmenu.forEach(button => {
+        button.addEventListener('click', () => {
+            button.parentElement.classList.value = 'catalog__submenu';
+            
+        });
+    });
+    backButtonSubsubmenu.forEach(button => {
+        button.addEventListener('click', () => {
+            button.parentElement.classList.value = 'catalog__submenu';
+            
+        });
+    });
 });

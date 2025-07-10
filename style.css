@@ -517,13 +517,18 @@ input {
   position: absolute;
   left: 100%;
   top: 0;
-  display: none;
   flex-direction: column;
   width: 340px;
   padding: 20px;
   background-color: #ffffff;
   border-radius: 0 0 10px 10px;
   z-index: 2;
+}
+.catalog__submenu.show.catalog__mobile-submenu{
+  left: 0;
+}
+.catalog__submenu.show.catalog__mobile-subsubmenu{
+  left: 0;
 }
 
 .catalog__list-item-checkbox {
@@ -645,4 +650,33 @@ button.menuOpen>span:nth-child(3){
 
 button.menuOpen{
   justify-content: center;
+}
+
+.catalog__submenu,
+.catalog__subsubmenu {
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    opacity: 0;
+    transform: translateX(10px);
+}
+
+.catalog__submenu.show.catalog__mobile-submenu,
+.catalog__subsubmenu.show.catalog__mobile-subsubmenu {
+    opacity: 1;
+    transform: translateX(0);
+    left: 0;
+}
+
+.catalog__subsubmenu.show.catalog__mobile-submenu>button{
+  display: block;
+}
+
+.back-button{
+  z-index: 10;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  color: #4888FF;
 }
